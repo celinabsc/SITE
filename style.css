@@ -309,7 +309,9 @@ a {
   margin-right: 15px;
 }
 
-
+#large-text {
+  width : 700px
+}
 
 .gallery-container img {
   width: auto;
