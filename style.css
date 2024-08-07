@@ -1,0 +1,379 @@
+/* général */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  cursor: crosshair;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+h1{
+font-family: "Milkman", sans-serif;
+font-size: 30px;
+margin: 0;
+overflow-wrap: break-word;
+word-wrap: break-word;
+white-space: normal;
+}
+
+h1 a{
+  font-family: "Milkman", sans-serif;
+  font-size: 30px;
+  margin: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+  }
+
+h2{
+  font-family: "Milkman", sans-serif;
+  font-size: 25px;
+  margin: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  white-space: normal;
+  margin: 0;
+}
+
+a {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  color: black;
+  white-space: normal;
+  margin: 0;
+  text-decoration: none;
+  cursor: zoom-in;
+}
+
+/* header */
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  height: 4rem;
+  padding: 0 15px;
+  flex-shrink: 0;
+}
+
+#header .title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+#header .title img#exit-icon {
+  margin-right: 15px;
+  height: 40px;
+  cursor: zoom-in;
+}
+
+#header .title .title-text {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+#header .title .title-text a {
+  display: none;
+  color: black;
+}
+
+#header .title .title-text img#fleche-icon {
+  width: 60px;
+  margin-top: 5px;
+}
+
+#header .title .title-text:hover a {
+  display: block;
+  cursor: zoom-in;
+}
+
+#header .title .title-text:hover img#fleche-icon {
+  display: none;
+}
+
+#header .about a {
+  font-family: "Milkman", sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+#header .about a:hover {
+  text-decoration: underline;
+  cursor: zoom-in;
+}
+
+/* a propos */
+.content-container {
+  user-select: none;
+  display: flex;
+  height: calc(100vh - 4rem); /* Ajuste la hauteur totale pour occuper toute la hauteur disponible */
+  width: 100%;
+  margin: 0 auto; /* Centrer le conteneur */
+}
+
+.about-text {
+  padding: 15px;
+  border-right: 1px solid rgb(0, 0, 0);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 5px); /* Largeur initiale pour les panneaux égaux */
+  min-width: 24.4rem;
+  flex: 0 1 auto;
+}
+
+.about-text p {
+  margin-top: auto;
+}
+
+.splitter {
+  width: 10px; /* Largeur du splitter */
+  cursor: col-resize; /* Curseur lors du survol pour indiquer la fonction de redimensionnement */
+  z-index: 1; /* Assure que le splitter est au-dessus des panneaux */
+}
+
+/* Style au survol du splitter */
+.splitter:hover {
+  background: linear-gradient(180deg, rgb(0, 255, 0) 0%, rgb(0, 255, 0) 100%);
+}
+
+.additional-content {
+  border-left: 1px solid rgb(0, 0, 0);
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 34.1rem;
+}
+
+.additional-content .top-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.additional-content .qualifications {
+  margin-top: auto;
+  position: relative;
+  
+}
+
+.additional-content .qualifications ul {
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+.additional-content .qualifications ul li {
+  margin-left: 60px; /* Indentation for list items */
+}
+
+.additional-content .bottom-content {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 15px;
+  display: none;
+  text-align: end;
+}
+
+.additional-content:hover .bottom-content {
+  display: block;
+}
+
+.additional-content .bottom-left-content {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 15px;
+}
+
+.additional-content p {
+  margin: 0;
+}
+
+/* index */
+#projets {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 20px;
+  overflow-x: auto; /* Permet le défilement horizontal */
+  overflow-y: hidden; /* Masque le défilement vertical */
+  touch-action: pan-x
+}
+
+.projets-container {
+  display: flex; /* S'assure que les éléments à l'intérieur s'alignent horizontalement */
+  flex-direction: column;
+  width: 100%;
+}
+
+.ligne {
+  z-index: 1;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  flex: 1; /* Assure que les lignes occupent l'espace disponible */
+}
+
+.projet {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 5vw;
+  line-height: 7vw;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: color 0.2s;
+  white-space: nowrap; /* Empêche le texte de se casser */
+}
+
+.projet:hover {
+  color: rgb(0, 255, 0);
+}
+
+.photo-projet {
+  position: relative;
+  height: 100%;
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.photo-projet img {
+  position: relative;
+  bottom: 1vw;
+  height: 7vw;
+  pointer-events: none;
+}
+
+
+/* projet */
+.gallery {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 15px;
+  margin-bottom: 4rem;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  align-self: flex-start;
+  width: 400px;
+  white-space: pre;
+  margin-right: 15px;
+}
+
+
+
+.gallery-container img {
+  width: auto;
+  height: 450px;
+  object-fit: cover;
+}
+
+/* réactif */
+@media (max-width: 480px) {
+
+  .content-container {
+    flex-direction: column; /* Empile les colonnes l'une sous l'autre */
+    height: auto; /* Ajuste la hauteur en fonction du contenu */
+    margin: 0px;
+  }
+
+.about-text,
+.additional-content {
+    width: 100%; /* Chaque colonne occupe toute la largeur disponible */
+    border: none; /* Supprime les bordures pour éviter les chevauchements */
+    min-width: 0px;
+    height: auto;
+}
+
+.additional-content .qualifications {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  height: auto;
+}
+
+.splitter {
+    display: none; /* Masque le splitter en mode mobile */
+}
+
+  .additional-content .bottom-left-content {
+    position: relative;
+  bottom: 0;
+}
+
+  .projet {
+    font-size: 10vw;
+    line-height: 12vw;
+  }
+
+  .photo-projet img {
+    height: 20vw;
+  }
+
+  #header .title h1, #header .about a, #header .title .title-text a {
+    font-size: 20px;
+  }
+
+  #header .title img#exit-icon {
+    height: 1.5rem;
+    width: 2rem;
+    margin-right: 2vw;
+  }
+
+  #header .title .title-text img#fleche-icon {
+    width: 9vw;
+    margin-top: 0.5vw;
+  }
+
+  .gallery-container img {
+    width: 300px;
+  }
+
+  .text-container p, .about p {
+    font-size: 16px;
+  }
+
+  .text-container h1 {
+    font-size: 25px;
+  }
+}
