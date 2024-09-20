@@ -1,4 +1,3 @@
-/* général */
 html, body {
   width: 100%;
   height: 100%;
@@ -20,7 +19,10 @@ html, body {
   src: url("fonts/InstrumentSerif-Italic.ttf") format("truetype");
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fdaf93e2948b56789c7285360dc7b71898c0c72d
 h1{
 font-family: "Milkman", sans-serif;
 font-size: 30px;
@@ -246,7 +248,11 @@ svg{
 }
 
 .projets-container {
+<<<<<<< HEAD
   display: flex;
+=======
+  display: flex; 
+>>>>>>> fdaf93e2948b56789c7285360dc7b71898c0c72d
   flex-direction: column;
   width: 100%;
 }
@@ -259,7 +265,11 @@ svg{
   overflow: hidden;
   white-space: nowrap;
   user-select: none;
+<<<<<<< HEAD
   flex: 1;
+=======
+  flex: 1; 
+>>>>>>> fdaf93e2948b56789c7285360dc7b71898c0c72d
 }
 
 .projet {
@@ -269,7 +279,11 @@ svg{
   cursor: pointer;
   border-radius: 10px;
   transition: color 0.2s;
+<<<<<<< HEAD
   white-space: nowrap;
+=======
+  white-space: nowrap; 
+>>>>>>> fdaf93e2948b56789c7285360dc7b71898c0c72d
 }
 
 .projet:hover {
@@ -330,9 +344,14 @@ svg{
   margin-right: 15px;
 }
 
+<<<<<<< HEAD
 
 #large-text{
   width: 760px;;
+=======
+#large-text {
+  width : 700px
+>>>>>>> fdaf93e2948b56789c7285360dc7b71898c0c72d
 }
 
 .gallery-container img {
@@ -369,7 +388,11 @@ svg{
 .about-text,
 .additional-content {
     width: 100%;
+<<<<<<< HEAD
     border: none;
+=======
+    border: none; 
+>>>>>>> fdaf93e2948b56789c7285360dc7b71898c0c72d
     min-width: 0px;
     height: auto;
 }
@@ -386,6 +409,7 @@ svg{
 
 .splitter {
     display: none;
+<<<<<<< HEAD
 }
 
 .diablotin{
@@ -395,6 +419,8 @@ svg{
 
 .top-content h1 {
   color: rgb(0, 255, 0);
+=======
+>>>>>>> fdaf93e2948b56789c7285360dc7b71898c0c72d
 }
 
   .additional-content .bottom-left-content {
