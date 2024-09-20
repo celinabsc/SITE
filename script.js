@@ -3,29 +3,27 @@
 document.addEventListener('DOMContentLoaded', function() {
     const lignes = document.querySelectorAll('.ligne');
     const repetitions = 5;
-
+    
     lignes.forEach(ligne => {
+        // Cloner les projets pour créer un effet de défilement infini
         const projets = Array.from(ligne.children);
-
         for (let i = 0; i < repetitions; i++) {
             projets.forEach(projet => ligne.appendChild(projet.cloneNode(true)));
         }
 
-        ligne.scrollLeft = 0;
-
         let scrollAmount = 0;
-        const speed = 2;
-        let isScrolling = false;
-        let isDragging = false;
-        let startX;
-        let scrollLeft;
+        const speed = 1;
+        let isScrolling = window.innerWidth > 480;
         let animationFrameId;
-        let wasDragging = false;
+        let isManualScroll = false;
+        let manualScrollPosition = 0;
+        let touchStartX = 0;
+        let touchMoveX = 0;
 
         const startScroll = () => {
-            if (isScrolling && window.innerWidth > 480) { 
+            if (isScrolling && !isManualScroll) {
                 scrollAmount += speed;
-                if (scrollAmount > ligne.scrollWidth - ligne.clientWidth) {
+                if (scrollAmount >= ligne.scrollWidth / 2) {
                     scrollAmount = 0;
                 }
                 ligne.scrollLeft = scrollAmount;
@@ -33,67 +31,106 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        const startDrag = (e) => {
-            isDragging = true;
-            wasDragging = false;
-            startX = e.pageX - ligne.getBoundingClientRect().left;
-            scrollLeft = ligne.scrollLeft;
-            ligne.style.cursor = 'grabbing';
-            isScrolling = false;
+        // Démarrer le défilement automatique si nécessaire
+
+
+        // Événement pour le défilement avec la molette de la souris
+        ligne.addEventListener('wheel', function(event) {
+            if (event.deltaY > 0) { // Autoriser uniquement le défilement vers la droite
+                isManualScroll = true; // Indique que le défilement est manuel
+                manualScrollPosition = ligne.scrollLeft; // Stocker la position de défilement
+        
+                ligne.scrollBy({
+                    left: event.deltaY * 3, // Utilise scrollBy pour un défilement smooth
+                    behavior: 'smooth'
+                });
+        
+                // Arrêter le défilement automatique pendant le défilement manuel
+                isScrolling = false;
+                cancelAnimationFrame(animationFrameId);
+        
+                // Réactiver le défilement automatique après une courte pause
+                clearTimeout(window.scrollTimeout);
+                window.scrollTimeout = setTimeout(() => {
+                    isManualScroll = false;
+                    isScrolling = window.innerWidth > 480;
+                    if (isScrolling) {
+                        // Reprendre le défilement automatique à partir de la position de défilement manuel
+                        scrollAmount = ligne.scrollLeft;
+                        startScroll();
+                    }
+                }, 100); // Ajustez la durée si nécessaire
+            }
+            event.preventDefault(); // Empêche le défilement dans l'autre direction
+        });
+
+        // Événements pour le défilement tactile
+        ligne.addEventListener('touchstart', function(event) {
+            isManualScroll = true; // Indique que le défilement est manuel
+            manualScrollPosition = ligne.scrollLeft; // Stocker la position de défilement
+            touchStartX = event.touches[0].clientX;
             cancelAnimationFrame(animationFrameId);
-        };
+        });
 
-        const drag = (e) => {
-            if (isDragging) {
-                wasDragging = true;
-                const x = e.pageX - ligne.getBoundingClientRect().left;
-                const walk = (x - startX) * 0.5;
-                ligne.scrollLeft = scrollLeft - walk;
+        ligne.addEventListener('touchmove', function(event) {
+            touchMoveX = event.touches[0].clientX;
+            const touchDeltaX = touchStartX - touchMoveX;
+
+            if (touchDeltaX > 0) { // Autoriser uniquement le défilement vers la droite
+                ligne.scrollLeft += touchDeltaX;
             }
-        };
 
-        const endDrag = (e) => {
-            if (isDragging) {
-                isDragging = false;
-                ligne.style.cursor = 'grab';
+            touchStartX = touchMoveX; // Réinitialiser la position de départ pour un défilement fluide
+            event.preventDefault(); // Empêcher les événements par défaut comme le défilement vertical de la page
+        });
+
+        ligne.addEventListener('touchend', function() {
+            isManualScroll = false;
+            isScrolling = window.innerWidth > 480;
+            if (isScrolling) {
                 scrollAmount = ligne.scrollLeft;
-                isScrolling = true;
-                if (window.innerWidth > 480) { 
-                    startScroll();
-                }
-                if (wasDragging) {
-                    e.preventDefault();
-                }
-            }
-        };
-
-        ligne.addEventListener('mouseenter', () => {
-            if (!isDragging && window.innerWidth > 480) { 
-                isScrolling = true;
                 startScroll();
             }
         });
 
+        // Ajouter un événement de clic sur chaque .projet pour accéder au lien
+        ligne.querySelectorAll('.projet').forEach(projet => {
+            projet.addEventListener('click', function() {
+                const lien = projet.getAttribute('data-link'); // Récupérer le lien depuis un attribut data-link
+                if (lien) {
+                    window.location.href = lien; // Naviguer vers le lien
+                }
+            });
+        });
+
+        // Arrêter le défilement automatique lorsque la souris quitte la ligne
         ligne.addEventListener('mouseleave', () => {
             isScrolling = false;
             cancelAnimationFrame(animationFrameId);
         });
 
-        ligne.addEventListener('mousedown', startDrag);
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', endDrag);
+        // Reprendre le défilement automatique lorsque la souris entre dans la ligne
+        ligne.addEventListener('mouseenter', () => {
+            isScrolling = window.innerWidth > 480;
+            if (isScrolling && !isManualScroll) {
+                startScroll();
+            }
+        });
 
-        ligne.addEventListener('click', (e) => {
-            const projet = e.target.closest('.projet');
-            if (projet && !wasDragging) {
-                const link = projet.getAttribute('data-link');
-                if (link) {
-                    window.location.href = link;
-                }
+        // Adapter le défilement automatique en fonction de la taille de la fenêtre
+        window.addEventListener('resize', () => {
+            scrollAmount = ligne.scrollLeft;
+            isScrolling = window.innerWidth > 480;
+            if (isScrolling) {
+                cancelAnimationFrame(animationFrameId);
+                startScroll();
             }
         });
     });
 });
+
+
+
 
 //gallerie projet
 
@@ -116,51 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let i = 0; i < repetitions; i++) {
         images.forEach(img => galleryContainer.appendChild(img.cloneNode(true)));
     }
-
-    let scrollAmount = 0;
-    const speed = 1;
-    let isScrolling = window.innerWidth > 480; 
-
-    const startScroll = () => {
-        if (isScrolling) {
-            scrollAmount += speed;
-            if (scrollAmount >= galleryContainer.scrollWidth / 2) {
-                scrollAmount = 0;
-            }
-            galleryContainer.scrollLeft = scrollAmount;
-            animationFrameId = requestAnimationFrame(startScroll);
-        }
-    };
-
-    if (isScrolling) {
-        startScroll();
-    }
-
-    document.querySelector('.gallery').addEventListener('wheel', function(event) {
-        galleryContainer.scrollLeft += event.deltaY;
-        event.preventDefault();
-    });
-
-    document.querySelector('.gallery').addEventListener('mouseenter', () => {
-        isScrolling = false;
-        cancelAnimationFrame(animationFrameId);
-    });
-
-    document.querySelector('.gallery').addEventListener('mouseleave', () => {
-        isScrolling = window.innerWidth > 480; 
-        if (isScrolling) {
-            startScroll();
-        }
-    });
-
-    window.addEventListener('resize', () => {
-        scrollAmount = galleryContainer.scrollLeft;
-        isScrolling = window.innerWidth > 480; 
-        if (isScrolling) {
-            cancelAnimationFrame(animationFrameId);
-            startScroll();
-        }
-    });
 });
 
 //a propos traduction
@@ -256,3 +248,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', handleResize);
 });
+
