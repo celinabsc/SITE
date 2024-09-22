@@ -19,7 +19,10 @@ html, body {
   src: url("fonts/InstrumentSerif-Italic.ttf") format("truetype");
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fdaf93e2948b56789c7285360dc7b71898c0c72d
 h1{
 font-family: "Milkman", sans-serif;
 font-size: 30px;
