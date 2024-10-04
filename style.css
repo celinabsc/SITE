@@ -202,27 +202,25 @@ a {
 
 .additional-content:hover .bottom-content {
   display: block;
+  position:absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .additional-content .bottom-left-content {
   position: absolute;
-  bottom: 0;
-  margin-bottom: 10px;
+  bottom: 10px;
 }
 
 .additional-content p {
   margin: 0;
 }
 
-
-
 .diablotin{
   display: none; 
   margin-top: 10px;
   max-width: 100%; 
 }
-
-
 
 svg{
   .trace {
@@ -290,7 +288,6 @@ svg{
   pointer-events: none;
 }
 
-
 /* projet */
 .gallery {
   position: fixed;
@@ -315,9 +312,6 @@ svg{
   align-items: center;
   flex-direction: row;
   gap: 5px;
-  
-
- 
 }
 
 .text-container {
@@ -329,7 +323,6 @@ svg{
   white-space: pre;
   margin-right: 15px;
 }
-
 
 #large-text{
   width: 760px;;
@@ -365,7 +358,6 @@ svg{
     margin: 0px;
   }
   
-
 .about-text,
 .additional-content {
     width: 100%;
@@ -413,7 +405,7 @@ svg{
 }
 
 .additional-content .bottom-content {
-  position: relative;
+  position: fixed;
   display: none;
   text-align: center;
 }
