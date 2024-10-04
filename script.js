@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 manualScrollPosition = ligne.scrollLeft; // Stocker la position de défilement
         
                 ligne.scrollBy({
-                    left: event.deltaY * 3, // Utilise scrollBy pour un défilement smooth
+                    left: event.deltaY * 7, // Utilise scrollBy pour un défilement smooth
                     behavior: 'smooth'
                 });
         
